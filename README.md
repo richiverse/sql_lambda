@@ -1,2 +1,2 @@
 # sql-lambda
-Register backends with lambda and execute sql queries
+Register encrypted backends with JOSE and dynamodb and execute sql with lambda
