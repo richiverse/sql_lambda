@@ -1,0 +1,17 @@
+{
+    "test": {
+    "aws_region": "us-east-1",
+    "profile_name": "<your-aws-profile-name>",
+    "app_function": "app.app", 
+    "project_name": "sql-app",
+    "keep_warm": false,
+    "s3_bucket": "<your-bucket-name>",
+    "manage_roles": true,
+    "role_name": "ZappaLambdaExecution",
+    "domain": "<optional-domain>",
+    "certificate_arn": "<optional-domain-arn",
+    "environment_variables": {
+        "SQL_TEST_URL": "<your-sql-api-url>"
+    	}
+    }
+}

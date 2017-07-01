@@ -1,0 +1,7 @@
+zappa
+flask
+flask-bootstrap
+flask-nav
+flask-wtf
+python-jose
+requests

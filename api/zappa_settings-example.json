@@ -1,0 +1,25 @@
+{
+	"test": {
+		"api_key_required": true,
+		"aws_region": "us-east-1",
+		"profile_name": "<your-aws-profile-name>",
+		"app_function": "api.api", 
+		"project_name": "sql",
+		"keep_warm": false,
+		"s3_bucket": "<your-bucket-name>",
+		"manage_roles": true,
+		"role_name": "ZappaLambdaExecution",
+		"domain": "<optional-domain-name>",
+		"certificate_arn": "<optional-domain-arn>",
+		"vpc_config": {
+			"SubnetIds": [
+				"subnet-XXXXXXXX",
+				"subnet-YYYYYYYY"
+			],
+			"SecurityGroupIds": [
+				"sg-XXXXXXXX",
+				"sg-YYYYYYYY"
+			]
+		}
+	}
+}

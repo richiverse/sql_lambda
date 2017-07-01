@@ -1,0 +1,9 @@
+zappa
+flask
+python-jose
+pynamodb
+sqlalchemy
+# your database dependencies here
+redshift-sqlalchemy
+psycopg2
+pymssql
