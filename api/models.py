@@ -1,8 +1,7 @@
 """Pynamodb is similar to most ORMs in nature"""
 import boto3
 from pynamodb.models import Model
-from pynamodb.attributes import (
-    UnicodeAttribute, BooleanAttribute)
+from pynamodb.attributes import UnicodeAttribute
 
 class Backend(Model):
     class Meta:

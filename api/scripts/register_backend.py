@@ -3,7 +3,6 @@
 Your credentials are encrypted prior to transport and your api gateway key
 is used to encrypt and validate you as a user on the other end.
 """
-from functools import partial
 from os import environ as env, path
 import sys
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))

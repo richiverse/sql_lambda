@@ -3,7 +3,7 @@ from os import environ as env
 import random
 import string
 from sys import argv
-from subprocess import check_output
+import subprocess
 
 
 def initialize_docker():
@@ -12,16 +12,16 @@ def initialize_docker():
     Be sure to have your environment variables set
     for MSSQL_PASSWORD
     """
-    check_output("docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=%s'"
+    subprocess.run("docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=%s'"
                 " -p 1433:1433 -d microsoft/mssql-server-linux"
-                % env['MSSQL_PASSWORD'], shell=True
+                % env['MSSQL_PASSWORD'].split()
     )
 
 def seed_database():
-    check_output(
+    subprocess.run(
         'sqlcmd -S $MSSQL_HOST '
         '-U $MSSQL_USER -P $MSSQL_PASSWORD '
-        '-i ./scripts/init.sql', shell=True
+        '-i ./scripts/init.sql'.split()
     )
 
 def initialize_process():
@@ -29,10 +29,10 @@ def initialize_process():
     seed_database()
 
 def destroy_tables():
-    check_output(
+    subprocess.run(
         'sqlcmd -S $MSSQL_HOST '
         '-U $MSSQL_USER -P $MSSQL_PASSWORD '
-        '-i ./scripts/destroy.sql', shell=True
+        '-i ./scripts/destroy.sql'.split()
     )
 
 def generate_secret(size=64):

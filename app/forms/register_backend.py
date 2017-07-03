@@ -6,7 +6,7 @@ from wtforms import (
     IntegerField,
     SubmitField,
 )
-from wtforms.validators import Required, URL, Length, Regexp, NumberRange
+from wtforms.validators import Required, Length, Regexp, NumberRange
 from wtforms.widgets import TextArea
 
 class BackendRegistrationForm(FlaskForm):

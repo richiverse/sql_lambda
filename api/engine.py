@@ -16,22 +16,14 @@ class SqlClient(object):
     """SQL Client for any engine in ENGINES.
 
     >>> redshift = SqlClient('REDSHIFT')
-    >>> viewer = redshift.sql_viewer()
+    >>> viewer = redshift.sql_client()
     >>> viewer('select * from table;')
-    __results__ #  as pd.DataFrame
-    >>> doer = redshift.sql_doer()
-    >>> doer('insert into table things;')
-    1 row affected
     """
 
     def __init__(self, engine, autocommit=True):
         """Just need engine from ENGINES object."""
         self.engine = _create_engine(engine, autocommit)
 
-    def sql_viewer(self):
+    def sql_client(self):
         """Convenience function to view query results."""
-        return self.engine.execute
-
-    def sql_doer(self):
-        """Convenience function to execute table mutations."""
         return self.engine.execute

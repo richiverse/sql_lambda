@@ -1,15 +1,15 @@
 #! /usr/bin/env python
-from os import urandom, environ as env, path
+from os import urandom, environ as env
 from traceback import format_exc
 
-from flask import Flask, flash, render_template, jsonify, redirect, url_for
+from flask import Flask, flash, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_wtf.csrf import CSRFProtect
 from markupsafe import escape
 import requests
 
 from forms.register_backend import BackendRegistrationForm
-from utils import encrypt
+from ..utils import encrypt
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = urandom(64).encode('hex')
