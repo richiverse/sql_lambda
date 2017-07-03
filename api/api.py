@@ -7,8 +7,6 @@ from traceback import format_exc
 from flask import Flask, request, jsonify
 from sqlalchemy.exc import ProgrammingError, OperationalError
 from pynamodb.exceptions import (
-    QueryError,
-    GetError,
     DeleteError,
     DoesNotExist
 )
@@ -17,13 +15,22 @@ from engine import SqlClient
 from jinja2 import Environment
 from models import Backend
 from middleware import list_routes
-from ..utils import decrypt
+from sql_lambda.utils import decrypt
 
 api = Flask(__name__)
+
 
 def raise_if_not_exists(model):
     if not model.exists():
         raise DoesNotExist()
+
+
+@api.before_request
+def before_request():
+    print('WTF')
+    if request.remote_addr != env['REMOTE_ADDR']:
+        abort(401)
+
 
 @api.errorhandler(Exception)
 def exception_handler(error):
@@ -38,17 +45,20 @@ def exception_handler(error):
         """
     raise Exception(format_exc())
 
+
 @api.route('/')
 def list_api_routes():
     """List all endpoints"""
     return jsonify(list_routes(api))
 
+
 @api.route('/backend/list')
 def get_backends():
     raise_if_not_exists(Backend)
-    return ''.join({item.name:
-                    item.description
-                    for item in Backend.scan()})
+    return ''.join(
+        {item.name: item.description
+        for item in Backend.scan()})
+
 
 @api.route('/register/<backend>', methods=['POST'])
 def register_backend(backend):
@@ -95,7 +105,7 @@ def _get_credentials(backend):
 
 def _format_sql(sql, sql_params):
     return Environment(autoescape=True).from_string(
-        sql).render(json.loads(sql_params))
+        sql).render(loads(sql_params))
 
 
 def _connect(backend, key, autocommit):
