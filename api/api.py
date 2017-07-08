@@ -4,7 +4,7 @@ from json import loads
 from os import environ as env
 from traceback import format_exc
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
 from sqlalchemy.exc import ProgrammingError, OperationalError
 from pynamodb.exceptions import (
     DeleteError,
@@ -15,7 +15,7 @@ from engine import SqlClient
 from jinja2 import Environment
 from models import Backend
 from middleware import list_routes
-from sql_lambda.utils import decrypt
+from utils import decrypt
 
 api = Flask(__name__)
 
@@ -27,9 +27,13 @@ def raise_if_not_exists(model):
 
 @api.before_request
 def before_request():
-    print('WTF')
-    if request.remote_addr != env['REMOTE_ADDR']:
+    if request.remote_addr not in (env['REMOTE_ADDR'], '127.0.0.1'):
         abort(401)
+
+
+@api.errorhandler(401)
+def unauthorized(e):
+    return {'message': 'Unauthorized'}
 
 
 @api.errorhandler(Exception)
@@ -57,7 +61,8 @@ def get_backends():
     raise_if_not_exists(Backend)
     return ''.join(
         {item.name: item.description
-        for item in Backend.scan()})
+        for item in Backend.scan()}
+    )
 
 
 @api.route('/register/<backend>', methods=['POST'])
@@ -123,6 +128,7 @@ def _sql_cmd(client, sql):
         return str(err), 400
     except Exception as err:
         return str(err), 400
+
 
 @api.route('/view/<backend>', methods=['GET'])
 def view_sql(backend):

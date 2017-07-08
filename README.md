@@ -34,7 +34,7 @@ print(response.json)
 * You will need a service account or user credentials in order to connect.
 * Obviously do not share your api key with anyone as they can access whatever you can access with it.
 
-I **STRONGLY** advise you to use `api_key_required: true` as well as [IP restriction in IAM](http://benfoster.io/blog/aws-api-gateway-ip-restrictions) to limit usage of this API to within your VPN.
+I **STRONGLY** advise you to use `api_key_required: true` as well as setting REMOTE_ADDR in your environment_variables to restrict your IP address to your VPN IP to limit usage of this API to within your VPN.
 
 ## Deploying the api
 Assuming you're already familiar with zappa deployments here.
@@ -57,7 +57,7 @@ zappa deploy dev
 
 Please note to use a separate virtualenv for the api.
 ```bash
-deactivate # We are using a separate virtualenv as these reqs/dockerfile are heavier.
+deactivate # We are using a separate virtualenv as these reqs/dockerfile are lighter.
 cd ./sql/app
 # same as above in a separate virtualenv
 ```

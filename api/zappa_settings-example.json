@@ -11,6 +11,9 @@
 		"role_name": "ZappaLambdaExecution",
 		"domain": "<optional-domain-name>",
 		"certificate_arn": "<optional-domain-arn>",
+		"environment_variables": {
+			"REMOTE_ADDR": "123.45.678"                    
+		},
 		"vpc_config": {
 			"SubnetIds": [
 				"subnet-XXXXXXXX",

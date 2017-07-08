@@ -9,7 +9,7 @@ from markupsafe import escape
 import requests
 
 from forms.register_backend import BackendRegistrationForm
-from ..utils import encrypt
+from utils import encrypt
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = urandom(64).encode('hex')
